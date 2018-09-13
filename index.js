@@ -1,27 +1,26 @@
 let h = React.createElement;
 
+const posts = [
+    { id: 1, title: '1st comment' },
+    { id: 2, title: '2nd comment' },
+    { id: 3, title: '3rd comment' }
+];
+
 let WassupForm = () => {
-    return h('form', {}, [
-        h('input', {}),
-        h('button', {}, 'post')
-    ]);
-}
-    
+    return h('form', {}, h('input', {}), h('button', {}, 'post'));
+};
 
-let WassupList = () => {
-    return h('div', {}, [
-        h('h3', {}, 'Wassup List'),
-        h(WassupRow),
-    ]);
-}
+let WassupList = (props) => {
+    return h('div', {}, h('h3', {}, props.posts.map(post => {
+         return h(WassupRow, {post: post, key: post.id} );
+    })));
+};
 
-let WassupRow = () => {
-    return h('ul', {}, [
-        h('li', {}, '1st comment'),
-        h('li', {}, '2nd comment'),
-        h('li', {}, '3rd comment')
-    ]);
-}
+let WassupRow = (props) => {
+    return h('ul', {}, 
+        h('li', {}, props.post.title)
+    );
+};
 
 class Homepage extends React.Component {
     constructor(props) {
@@ -29,12 +28,12 @@ class Homepage extends React.Component {
         this.state = {};
     }
     render() {
-        return h('div', {}, [
+        return h('div', {}, 
             h('h1', {}, 'WassUp!'),
             h(WassupForm),
-            h(WassupList),
+            h(WassupList, { posts: posts }),
             h('h4', {}, 'copyright 2018')
-    ]);
+        );
     }
 }
 
