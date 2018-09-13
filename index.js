@@ -9,7 +9,10 @@ let WassupForm = () => {
     
 
 let WassupList = () => {
-    return h('div', {}, 'WassupList');
+    return h('div', {}, [
+        h('h3', {}, 'Wassup List'),
+        h(WassupRow),
+    ]);
 }
 
 let WassupRow = () => {
@@ -26,10 +29,11 @@ class Homepage extends React.Component {
         this.state = {};
     }
     render() {
-        return h('div', {}, [h('h1', {}, 'WassUp!'),
+        return h('div', {}, [
+            h('h1', {}, 'WassUp!'),
             h(WassupForm),
             h(WassupList),
-            h(WassupRow)
+            h('h4', {}, 'copyright 2018')
     ]);
     }
 }
