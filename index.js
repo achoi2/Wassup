@@ -2,7 +2,7 @@ let generateId = () => {
     return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString();
 };
 
-class WassupForm extends React.Component {
+class WassupFormContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,25 +12,31 @@ class WassupForm extends React.Component {
 
     render() {
         return (
-            <form
-                onSubmit={event => {
-                    event.preventDefault();
-                    this.props.addPost(this.state.newPost);
-                }}
-            >
-                <input
-                    type="text"
-                    value={this.state.newPost}
-                    onChange={event => {
-                        let value = event.target.value;
-                        this.setState({ newPost: value });
-                    }}
-                />
-                <input type="submit" value="Post" />
-            </form>
+            <WassupForm {...this.props} {...this.state} />
         );
     }
 }
+
+const WassupForm = props => {
+    return (
+        <form
+            onSubmit={event => {
+                event.preventDefault();
+                props.addPost(props.newPost);
+            }}
+        >
+            <input
+                type="text"
+                value={props.newPost}
+                onChange={event => {
+                    let value = event.target.value;
+                    this.setState({ newPost: value });
+                }}
+            />
+            <input type="submit" value="Post" />
+        </form>
+    );
+};
 
 let WassupList = props => {
     return (
@@ -80,20 +86,19 @@ class HomePageContainer extends React.Component {
             });
         };
 
-        return (
-            <div>
-                <h1>WassUp!</h1>
-                <WassupForm addPost={addPost} />
-                <WassupList posts={this.state.posts} />
-                <h4>Copyright 2018</h4>
-            </div>
-        );
+        return <Homepage addPost={addPost} {...this.state} />;
     }
 }
 
-const Homepage = () => {
-    return <HomePageContainer />
-}
+const Homepage = props => {
+    return (
+        <div>
+            <h1>WassUp!</h1>
+            <WassupFormContainer addPost={props.addPost} />
+            <WassupList posts={props.posts} />
+            <h4>Copyright 2018</h4>
+        </div>
+    );
+};
 
-
-ReactDOM.render(<Homepage />, document.querySelector('.root'));
+ReactDOM.render(<HomePageContainer />, document.querySelector('.root'));
