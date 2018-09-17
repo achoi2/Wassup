@@ -52,7 +52,7 @@ let WassupRow = props => {
     );
 };
 
-class Homepage extends React.Component {
+class HomePageContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -61,12 +61,10 @@ class Homepage extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://0.tcp.ngrok.io:18229/wassups.json')
+        fetch('http://0.tcp.ngrok.io:11971/wassups.json')
             .then(res => res.json())
             .then(posts => {
-                this.setState({
-                    posts: posts
-                });
+                this.setState({ posts: posts });
             });
     }
 
@@ -92,5 +90,10 @@ class Homepage extends React.Component {
         );
     }
 }
+
+const Homepage = () => {
+    return <HomePageContainer />
+}
+
 
 ReactDOM.render(<Homepage />, document.querySelector('.root'));
